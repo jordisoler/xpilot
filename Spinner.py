@@ -6,6 +6,7 @@ import os
 
 from constants import *
 from ship_state import ShipState
+from moveAt import MoveAt
 
 
 def angle_diff(alpha, beta):
@@ -38,6 +39,8 @@ def register():
     data["Y"] = ai.selfY()
     data["VelX"] = ai.selfVelX()
     data["VelY"] = ai.selfVelY()
+
+    # Check if it's the first iteration by checking if the data file is empty
     first_time = os.stat(DATA_FILE).st_size == 0
 
     with open(DATA_FILE, "a") as f:
@@ -56,12 +59,13 @@ def initialise():
 def ai_loop():
     """ Main loop. Automatically run at each frame. """
 
-    print(ship.current_action())
-    ship.set_action("hola")
-
     first_time = register()
     if first_time:
         initialise()
+        ship.set_action("move_at")
+        ship.set_ai(ai)
+
+    ship.act()
 
     #ai.shield()
     #ai.fireShot()
@@ -69,14 +73,14 @@ def ai_loop():
     #print("Position: (%u, %u)" % (ai.selfX(), ai.selfY()))
     #print("Radar: (%u, %u)" % (ai.selfRadarX(), ai.selfRadarY()))
     #print(ai.selfHeadingDeg())
-    diff = math.sqrt((ai.selfX()-TARGET[0])**2 +(ai.selfY()-TARGET[1])**2)
+    # diff = math.sqrt((ai.selfX()-TARGET[0])**2 +(ai.selfY()-TARGET[1])**2)
     # print("diff: %f" % diff)
-    if diff > 50.0:
-        move(TARGET)
+    # if diff > 50.0:
+        # move(TARGET)
         # ai.thrust(1)
-    else:
+    # else:
         # ai.thrust(0)
-        print("Done!")
+        # print("Done!")
     #ai.turn(1.23)
 
 
