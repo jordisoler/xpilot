@@ -4,10 +4,8 @@ import libpyAI as ai
 import math
 import os
 
-TARGET = (1000, 1000)
-DATA_FILE = "last_game.csv"
-# HOST = "147.83.26.103"
-HOST = "localhost"
+from constants import *
+
 
 def angle_diff(alpha, beta):
     """ Computes the absolute minimum distance between two angles """
@@ -79,5 +77,4 @@ def ai_loop():
 
 open(DATA_FILE, "w").close()
 
-# ai.start(AI_loop,["-name","Spinner_Jordi", "-join", "147.83.26.103"])
-ai.start(ai_loop, ["-name", "Spinner_Jordi", "-join", "localhost"])
+ai.start(ai_loop, ["-name", PLAYER_NAME, "-join", HOST])
