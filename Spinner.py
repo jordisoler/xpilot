@@ -5,6 +5,7 @@ import math
 import os
 
 from constants import *
+from ship_state import ShipState
 
 
 def angle_diff(alpha, beta):
@@ -55,6 +56,9 @@ def initialise():
 def ai_loop():
     """ Main loop. Automatically run at each frame. """
 
+    print(ship.current_action())
+    ship.set_action("hola")
+
     first_time = register()
     if first_time:
         initialise()
@@ -77,5 +81,6 @@ def ai_loop():
 
 
 open(DATA_FILE, "w").close()
+ship = ShipState()
 
 ai.start(ai_loop, ["-name", PLAYER_NAME, "-join", HOST])
