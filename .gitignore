@@ -1,2 +1,3 @@
 libpyAI.so
 *.csv
+__pycache__/*
