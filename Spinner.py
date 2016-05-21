@@ -25,8 +25,8 @@ def move(position):
             (ai.selfX(), ai.selfY(), ai.selfVelX(), ai.selfVelY()))
     if angle_diff(t_ang_deg, ai.selfHeadingDeg()) > 3.0:
         ai.turnToDeg(int(t_ang_deg))
-    else:
-        ai.thrust(1)
+    # else:
+        # ai.thrust(1)
 
 
 def register():
@@ -69,8 +69,9 @@ def ai_loop():
     # print("diff: %f" % diff)
     if diff > 50.0:
         move(TARGET)
+        # ai.thrust(1)
     else:
-        ai.thrust(0)
+        # ai.thrust(0)
         print("Done!")
     #ai.turn(1.23)
 
