@@ -13,9 +13,6 @@ class MoveAt(Action):
     def __init__(self, position):
         self.position = position
 
-    def init(self):
-        pass
-
     def act(self, ai):
         ai.thrust(1)
 

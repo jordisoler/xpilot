@@ -10,10 +10,6 @@
 class Action(object):
     """ Action object representiong a possible action of the ship. """
 
-    def start(self):
-        """ Initial procedure for the action. """
-        raise NotImplementedError("Method 'start' not implemented")
-
     def act(self):
         """ Main action """
         raise NotImplementedError("Method 'act' not implemented")
