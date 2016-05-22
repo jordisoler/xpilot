@@ -22,6 +22,7 @@ class MoveAt(Action):
         print("MoveAt: Initialising move at")
         if position is None:
             print("MoveAt: Target not specified!!")
+            ai.quitAI()
             sys.exit(0)
         else:
             self.position = position
