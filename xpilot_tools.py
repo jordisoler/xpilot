@@ -10,8 +10,20 @@ def angle_diff(alpha, beta):
 
 
 def distance_to(goal, origin=None):
+    """ Distance between two points in the game plane """
     if origin is None:
         origin = (ai.selfX(), ai.selfY())
 
     return math.hypot(goal[0]-origin[0], goal[1]-origin[1])
+
+
+def angle_to(goal, origin=None):
+    """ Angle between two points in the game plane """
+    if origin is None:
+        origin = (ai.selfX(), ai.selfY())
+
+    t_ang = math.atan2(goal[1] - origin[1],\
+            goal[0] - origin[0])
+
+    return t_ang * 180. / 3.1415
 

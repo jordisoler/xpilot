@@ -5,6 +5,7 @@
     Scientific Python for Engineers.
 """
 from moveAt import MoveAt
+from fire import Fire
 
 
 class ShipState(object):
@@ -35,6 +36,8 @@ class ShipState(object):
         """ Selects an action given its name """
         if name == "move_at":
             self.action = MoveAt(self.target)
+        if name == "fire":
+            self.action = Fire(self.target)
         else:
             print("ShipState: The name %s does not corrspond to any valid action" % name)
 

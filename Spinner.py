@@ -41,7 +41,7 @@ def ai_loop():
     first_time = register()
     if first_time:
         initialise()
-        ship.set_action("move_at", target=TARGET)
+        ship.set_action("fire", target=TARGET)
 
     ship.act()
 
