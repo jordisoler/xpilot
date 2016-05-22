@@ -1,4 +1,5 @@
 libpyAI.so
 *.csv
+*.csv#
 *.ods
 __pycache__/*

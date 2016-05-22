@@ -14,25 +14,17 @@ class ShipState(object):
     """
     def __init__(self):
         self.action = None
-        self.ai = None
+        self.target = None
 
-    def sey_hi(self):
-        """ Dummy function for debugging purposes """
-        print("Hi! I'm the ship state.")
-
-    def set_ai(self, ai):
-        """ Set the xpilot handler """
-        self.ai = ai
-
-    def set_action(self, act):
+    def set_action(self, act, target=None):
         """ Sets the current action """
         self.action = act
+        self.target = target
         self.selectAction(act)
 
     def act(self):
         """ Act according to the current action """
-        print("ShipState: Taking action.")
-        self.action.act(self.ai)
+        self.action.act()
 
     def current_action(self):
         """ Returns the ship current action """
@@ -42,6 +34,7 @@ class ShipState(object):
     def selectAction(self, name):
         """ Selects an action given its name """
         if name == "move_at":
-            self.action = MoveAt("hola")
+            self.action = MoveAt(self.target)
         else:
             print("ShipState: The name %s does not corrspond to any valid action" % name)
+
