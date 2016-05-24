@@ -33,6 +33,7 @@ def register():
 def initialise():
     """ Initial procedure """
     print("New Game!")
+    ship.set_action("go_center", target=TARGET)
 
 
 def ai_loop():
@@ -41,7 +42,6 @@ def ai_loop():
     first_time = register()
     if first_time:
         initialise()
-        ship.set_action("go_center", target=TARGET)
 
     ship.act()
 
