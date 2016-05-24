@@ -134,3 +134,13 @@ class MoveAt(Action):
     def is_done(self):
         return self.state == "done"
 
+
+class GoCenter(MoveAt):
+    """ Go to the center of the map """
+    def __init__(self):
+        print("hola")
+        middle = (MAP_WIDTH/2, MAP_HEIGHT/2)
+        print("dew")
+        super().__init__(position=middle)
+        print("dewww")
+

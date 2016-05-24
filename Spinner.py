@@ -6,7 +6,7 @@ import os
 
 from constants import *
 from ship_state import ShipState
-from moveAt import MoveAt
+from moveAt import MoveAt, GoCenter
 
 
 def register():
@@ -41,7 +41,7 @@ def ai_loop():
     first_time = register()
     if first_time:
         initialise()
-        ship.set_action("fire", target=TARGET)
+        ship.set_action("go_center", target=TARGET)
 
     ship.act()
 
