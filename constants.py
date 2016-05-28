@@ -1,5 +1,5 @@
 
-TARGET = (3000, 3000)
+TARGET = (1000, 1000)
 DATA_FILE = "last_game.csv" # File name to store game data
 # HOST = "147.83.26.103"
 HOST = "localhost"          # Server IP

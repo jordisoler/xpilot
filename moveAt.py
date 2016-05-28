@@ -7,11 +7,15 @@
 
 import math
 import sys
+import traceback
 import libpyAI as ai
+import numpy as np
 from action import Action
 from constants import *
 from xpilot_tools import angle_diff
 from xpilot_tools import distance_to
+from xpilot_tools import angle_to
+from xpilot_tools import cart2pol
 
 class MoveAt(Action):
     """
@@ -27,6 +31,9 @@ class MoveAt(Action):
         else:
             self.position = position
         self.state = "orienting"
+        self.k_pos = 0.025
+        self.k_vel = 0.005
+        self.t_th = 2.5
 
 
     def d_critic_reached(self, orient=True):
@@ -46,6 +53,43 @@ class MoveAt(Action):
         d_critic = d_turn + d_brake if orient else d_brake
         print("Critic distance: %f, goal distance: %f" % (d_critic, d_goal))
         return d_goal <= d_critic
+
+
+    def control(self):
+        """ Control the ship position. """
+        try:
+            pos = np.array([ai.selfX(), ai.selfY()])
+            vel = np.array([ai.selfVelX(), ai.selfVelY()])
+            orientation = ai.selfHeadingDeg() * 3.1415 / 180.
+
+            ang_des = angle_to(self.position) * 3.1415 / 180.
+            speed_des = distance_to(self.position) * self.k_pos
+
+            print("")
+            print("-"*80)
+            print("Pos: %s. Target: %s" % (pos, self.position))
+            print("Current angle: %f, ang_des: %f. speed_des: %f" % (orientation*180/3.14, ang_des*190/3.14, speed_des))
+
+            vel_des = self.position - pos
+            acc_des = (vel_des - vel) * self.k_vel
+            acc_mod, acc_ang = cart2pol(acc_des)
+
+            print("vel_des: %s, vel: %s. Acceleration: %s. Acc ang: %f" % (vel_des, vel, acc_des, acc_ang*180/3.1415))
+
+            # ang_vels = angle_diff(vel, vel_des)
+            # ai.turnToDeg(int(math.atan2(acc_des[1], acc_des[0])))
+
+            ai.turnToDeg(int(acc_ang * 180 / 3.1415))
+            thrust_level = np.cos(angle_diff(orientation, acc_ang)) * acc_mod
+            ai.thrust(thrust_level > self.t_th)
+
+            print("Cos: ", np.cos(angle_diff(orientation, acc_ang)))
+
+            print("""Velocity: %s, vel_des: %s, acc_des = %s, (%f, %u), thrust_level = %f"""\
+                    % (vel, vel_des, acc_des, acc_mod, int(acc_ang* 180 / 3.1415), thrust_level))
+        except:
+            print("Unexpected error, %s: %s" % sys.exc_info()[:2])
+            print(traceback.print_tb(sys.exc_info()[-1]))
 
 
     def orienting(self):
@@ -115,18 +159,21 @@ class MoveAt(Action):
 
 
     def act(self):
-        if self.state == "orienting":
-            self.orienting()
-        elif self.state == "launching":
-            self.launching()
-        elif self.state == "hovering":
-            self.hovering()
-        elif self.state == "braking":
-            self.braking()
-        elif self.state == "done":
-            pass
-        else:
-            print("Bad MoveAt state: ", self.state)
+        self.control()
+
+
+        # if self.state == "orienting":
+            # self.orienting()
+        # elif self.state == "launching":
+            # self.launching()
+        # elif self.state == "hovering":
+            # self.hovering()
+        # elif self.state == "braking":
+            # self.braking()
+        # elif self.state == "done":
+            # pass
+        # else:
+            # print("Bad MoveAt state: ", self.state)
 
     def preempt(self):
         ai.thrust(0)

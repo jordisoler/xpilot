@@ -33,7 +33,7 @@ def register():
 def initialise():
     """ Initial procedure """
     print("New Game!")
-    ship.set_action("go_center", target=TARGET)
+    ship.set_action("move_at", target=TARGET)
 
 
 def ai_loop():

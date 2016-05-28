@@ -1,12 +1,29 @@
 """ File containing tools for the Xpilot autopilot """
 import math
+import numpy as np
 import libpyAI as ai
 
 def angle_diff(alpha, beta):
     """ Computes the absolute minimum distance between two angles """
 
+    def getAngle(in_):
+        try:
+            return math.atan2(in_[1], in_[0])
+        except:
+            return in_
+
+    alpha, beta = map(getAngle, [alpha, beta])
+
     ang_abs = math.fabs(alpha-beta)
     return ang_abs if ang_abs < 180. else angle_diff(ang_abs - 360, 0)
+
+
+def cart2pol(cart):
+    """ Get polar coordinates of a vector in cartesian coordinates """
+    x, y = cart
+    rho = np.sqrt(x**2 + y**2)
+    phi = np.arctan2(y, x)
+    return (rho, phi)
 
 
 def distance_to(goal, origin=None):
