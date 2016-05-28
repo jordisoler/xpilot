@@ -43,10 +43,14 @@ def ai_loop():
     if first_time:
         initialise()
 
-    ship.act()
+    try:
+        ship.act()
+    except:
+        print("Unexpected error, %s: %s" % sys.exc_info()[:2])
+        print(traceback.print_tb(sys.exc_info()[-1]))
 
 
 open(DATA_FILE, "w").close()
 ship = ShipState()
 
-ai.start(ai_loop, ["-name", PLAYER_NAME, "-join", HOST])
+ai.start(ai_loop, ["-name", PLAYER_NAME, "-join", HOST, "-turnSpeed", MAX_TURN_SPEED])

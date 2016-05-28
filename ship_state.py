@@ -37,9 +37,9 @@ class ShipState(object):
         print("handling "+name)
         if name == "move_at":
             self.action = MoveAt(self.target)
-        if name == "go_center":
+        elif name == "go_center":
             self.action = GoCenter()
-        if name == "fire":
+        elif name == "fire":
             self.action = Fire(self.target)
         else:
             print("ShipState: The name %s does not correspond to any valid action" % name)
