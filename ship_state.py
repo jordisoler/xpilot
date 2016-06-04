@@ -4,7 +4,7 @@
     This is part of the XPilot bot for the final project in
     Scientific Python for Engineers.
 """
-from moveAt import MoveAt, GoCenter
+from moveAt import MoveAt, GoCenter, AvoidWall
 from fire import Fire
 
 
@@ -39,6 +39,8 @@ class ShipState(object):
             self.action = MoveAt(self.target)
         elif name == "go_center":
             self.action = GoCenter()
+        elif name == "avoid_wall":
+            self.action = AvoidWall()
         elif name == "fire":
             self.action = Fire(self.target)
         else:

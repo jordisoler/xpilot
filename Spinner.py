@@ -2,6 +2,8 @@
 #Run: python3 Spinner.py
 import libpyAI as ai
 import math
+import traceback
+import sys
 import os
 
 from constants import *
@@ -33,17 +35,17 @@ def register():
 def initialise():
     """ Initial procedure """
     print("New Game!")
-    ship.set_action("move_at", target=TARGET)
+    ship.set_action("avoid_wall", target=TARGET)
 
 
 def ai_loop():
     """ Main loop. Automatically run at each frame. """
 
-    first_time = register()
-    if first_time:
-        initialise()
-
     try:
+        first_time = register()
+        if first_time:
+            initialise()
+
         ship.act()
     except:
         print("Unexpected error, %s: %s" % sys.exc_info()[:2])
