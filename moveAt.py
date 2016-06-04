@@ -5,7 +5,6 @@
     Scientific Python for Engineers.
 """
 
-import math
 import sys
 import traceback
 import libpyAI as ai
@@ -13,8 +12,6 @@ import numpy as np
 from action import Action
 from constants import *
 from xpilot_tools import angle_diff
-from xpilot_tools import distance_to
-from xpilot_tools import angle_to
 from xpilot_tools import cart2pol
 
 class MoveAt(Action):
@@ -91,6 +88,7 @@ class MoveAt(Action):
 class GoCenter(MoveAt):
     """ Go to the center of the map """
     def __init__(self):
+        self.name = "go_center"
         middle = (MAP_WIDTH/2, MAP_HEIGHT/2)
         super().__init__(position=middle)
 
@@ -100,6 +98,7 @@ class AvoidWall(MoveAt):
         Ship action that consists in moving the ship away from the walls.
     """
     def __init__(self):
+        self.name = "avoid_walls"
         self.setGains()
 
 

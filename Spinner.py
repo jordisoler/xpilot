@@ -1,7 +1,6 @@
 #Xpilot-AI Team 2012
 #Run: python3 Spinner.py
 import libpyAI as ai
-import math
 import traceback
 import sys
 import os
@@ -9,6 +8,7 @@ import os
 from constants import *
 from ship_state import ShipState
 from moveAt import MoveAt, GoCenter
+from actionSelector import ActionSelector
 
 
 def register():
@@ -46,6 +46,9 @@ def ai_loop():
         if first_time:
             initialise()
 
+        action = actSelector.decide()
+        if action is not None and action != ship.current_action():
+            ship.set_action(action)
         ship.act()
     except:
         print("Unexpected error, %s: %s" % sys.exc_info()[:2])
@@ -54,5 +57,6 @@ def ai_loop():
 
 open(DATA_FILE, "w").close()
 ship = ShipState()
+actSelector = ActionSelector()
 
 ai.start(ai_loop, ["-name", PLAYER_NAME, "-join", HOST, "-turnSpeed", MAX_TURN_SPEED])

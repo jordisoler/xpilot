@@ -19,7 +19,8 @@ class ShipState(object):
 
     def set_action(self, act, target=None):
         """ Sets the current action """
-        self.action = act
+        if self.action is not None:
+            self.action.preempt()
         self.target = target
         self.selectAction(act)
 
@@ -29,7 +30,7 @@ class ShipState(object):
 
     def current_action(self):
         """ Returns the ship current action """
-        return self.action
+        return self.action.name
 
 
     def selectAction(self, name):

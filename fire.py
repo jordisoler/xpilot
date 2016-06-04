@@ -15,6 +15,7 @@ class Fire(Action):
         Ship action that consists in shoting in a certain direction.
     """
     def __init__(self, target=None):
+        self.name = "fire"
         if target is None:
             print("Fire: Target not specified!!")
             ai.quitAI()
