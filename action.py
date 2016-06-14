@@ -21,3 +21,15 @@ class Action(object):
     def is_done(self):
         """ True if the action has been completed """
         raise NotImplementedError("Method 'is_done' not implemented")
+
+
+class DoNothing(Action):
+    """ Actually, that's not an action. """
+
+    def __init__(self):
+        self.name = "do_nothing"
+
+    def act(self): pass
+    def preempt(self): pass
+    def is_done(self): return True
+

@@ -22,7 +22,7 @@ def cart2pol(cart):
     """ Get polar coordinates of a vector in cartesian coordinates """
     x, y = cart
     rho = np.sqrt(x**2 + y**2)
-    phi = np.arctan2(y, x)
+    phi = np.arctan2(y, x) * 180. / 3.1415
     return (rho, phi)
 
 

@@ -35,7 +35,7 @@ def register():
 def initialise():
     """ Initial procedure """
     print("New Game!")
-    ship.set_action("avoid_wall", target=TARGET)
+    ship.set_action("do_nothing")
 
 
 def ai_loop():

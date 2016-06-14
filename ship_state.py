@@ -5,6 +5,7 @@
     Scientific Python for Engineers.
 """
 from moveAt import MoveAt, GoCenter, AvoidWall
+from action import DoNothing
 from fire import Fire
 
 
@@ -44,6 +45,8 @@ class ShipState(object):
             self.action = AvoidWall()
         elif name == "fire":
             self.action = Fire(self.target)
+        elif name == "do_nothing":
+            self.action = DoNothing()
         else:
             print("ShipState: The name %s does not correspond to any valid action" % name)
 
