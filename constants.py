@@ -19,7 +19,7 @@ ON = 1                      # Thrust on
 OFF = 0                     # Thrust off
 
 ORIENTATION_TH = 2.0        # Orientation threshold in degrees
-TURNING_FRAMES = 40         # Needed frames to turn 180º
 
 MAX_TURN_SPEED = "64"
+TURN_SPEED = MAX_TURN_SPEED
 

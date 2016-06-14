@@ -32,8 +32,8 @@ class MoveAt(Action):
 
     def setGains(self):
         self.k_pos = 0.04
-        self.k_vel = 0.02
-        self.t_th = 0.02
+        self.k_vel = 0.015
+        self.t_th = 0.03
 
 
     def control(self, target=None):
@@ -57,7 +57,7 @@ class MoveAt(Action):
             print("")
             print("-"*80)
 
-            ang_des = int(acc_ang)
+            ang_des = int(acc_ang if acc_ang > 0 else acc_ang + 360)
             print("Turning to %u. Current: %u" % (ang_des, ai.selfHeadingDeg()))
             ai.turnToDeg(ang_des)
             thrust_level = np.cos(angle_diff(orientation, acc_ang)) * acc_mod
@@ -99,13 +99,14 @@ class AvoidWall(MoveAt):
     """
     def __init__(self):
         self.name = "avoid_walls"
+        self.position = [MAP_HEIGHT, MAP_WIDTH]
         self.setGains()
 
 
     def act(self):
         pos = [ai.selfX(), ai.selfY()]
         goal = []
-        for coord, maximum in zip(pos, [MAP_HEIGHT, MAP_WIDTH]):
+        for coord, maximum in zip(pos, self.position):
             goal.append(max(min(coord, maximum - WALL_MARGIN), WALL_MARGIN))
 
         self.done = pos == goal

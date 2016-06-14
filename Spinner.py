@@ -59,4 +59,4 @@ open(DATA_FILE, "w").close()
 ship = ShipState()
 actSelector = ActionSelector()
 
-ai.start(ai_loop, ["-name", PLAYER_NAME, "-join", HOST, "-turnSpeed", MAX_TURN_SPEED])
+ai.start(ai_loop, ["-name", PLAYER_NAME, "-join", HOST, "-turnSpeed", TURN_SPEED])

@@ -2,8 +2,9 @@
 import math
 import numpy as np
 import libpyAI as ai
+from constants import ON, OFF, TURN_SPEED
 
-def angle_diff(alpha, beta):
+def angle_diff(alpha, beta, vectors=True, signed=False):
     """ Computes the absolute minimum distance between two angles """
 
     def getAngle(in_):
@@ -12,10 +13,11 @@ def angle_diff(alpha, beta):
         except:
             return in_
 
-    alpha, beta = map(getAngle, [alpha, beta])
+    if vectors:
+        alpha, beta = map(getAngle, [alpha, beta])
 
-    ang_abs = math.fabs(alpha-beta)
-    return ang_abs if ang_abs < 180. else angle_diff(ang_abs - 360, 0)
+    ang_abs = math.fabs(alpha-beta) if not signed else alpha-beta
+    return ang_abs if ang_abs < 180. else angle_diff(ang_abs - 360, 0, vectors=False, signed=signed)
 
 
 def cart2pol(cart):
