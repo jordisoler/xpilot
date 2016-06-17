@@ -12,6 +12,8 @@ MAP_HEIGHT = 3000
 
 WALL_MARGIN = 500           # Margin to be kept with the walls
 
+FIRE_GAIN = 3
+
 SHIP_ACC = 1.7              # Ship acceleration (computed offline)
 MAX_VEL = 25                # Maximum ship velocity allowed
 
