@@ -15,6 +15,7 @@ class ShipState(object):
     def __init__(self):
         self.action = None
         self.target = None
+        self.warned = False
 
     def set_action(self, act, target=None):
         """ Sets the current action """
@@ -23,7 +24,6 @@ class ShipState(object):
             return
 
         action_name = act if type(act) == str else ACTIONS[act].__name__
-        print("Action name is :", action_name)
 
         # Check that new action is a valid action different than the current one
         if action_name != self.current_action():
@@ -35,28 +35,17 @@ class ShipState(object):
         try:
             self.action.act()
         except AttributeError:
-            print("Action not yet initialised!")
+            if not self.warned:
+                print("Action not yet initialised!")
+                self.warned = True
 
     def current_action(self):
         """ Returns the ship current action """
-        return None if self.action is None else type(self.action)
+        return "None" if self.action is None else self.action.__class__.__name__
 
 
     def select_action(self, name):
         """ Selects an action given its name """
-        # print("handling "+name)
-        # if name == "move_at":
-            # self.action = MoveAt(self.target)
-        # elif name == "go_center":
-            # self.action = GoCenter()
-        # elif name == "avoid_wall":
-            # self.action = AvoidWall()
-        # elif name == "fire":
-            # self.action = Fire(self.target)
-        # elif name == "do_nothing":
-            # self.action = DoNothing()
-        # else:
-            # print("ShipState: The name %s does not correspond to any valid action" % name)
         action_types = [atype for atype in ACTIONS if atype.__name__ == name]
 
         if len(action_types) > 1:
@@ -65,15 +54,9 @@ class ShipState(object):
             print("Name '"+name+"' does not name a valid action.")
             print("Valid names are: ", ", ".join(act.__name__ for act in ACTIONS))
         else:
-            print("Setting action: "+name)
+            print("Changing action: "+self.current_action()+" -> "+name)
             if self.action is not None:
                 self.action.preempt()
             self.action = action_types[0]()
-
-
-    def select_action_num(self, num):
-        self.action = ACTIONS[num]()
-        print("Setting action: "+type(self.action))
-
 
 

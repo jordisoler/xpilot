@@ -17,11 +17,14 @@ def action_pressed():
     """
     i, _, _ = select.select([sys.stdin], [], [], 0.0001)
     key = None
-    for s in i:
-        if s == sys.stdin:
-            key = sys.stdin.readline()[-2]
     try:
+        for s in i:
+            if s == sys.stdin:
+                key = sys.stdin.readline()[-2]
         action = int(key)
+    except IndexError:
+        print("Bad key pressed")
+        action = None
     except:
         action = None
     return action

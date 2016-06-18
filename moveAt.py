@@ -54,17 +54,17 @@ class MoveAt(Action):
 
             # ang_vels = angle_diff(vel, vel_des)
             # ai.turnToDeg(int(math.atan2(acc_des[1], acc_des[0])))
-            print("")
-            print("-"*80)
+            # print("")
+            # print("-"*80)
 
             ang_des = int(acc_ang if acc_ang > 0 else acc_ang + 360)
-            print("Turning to %u. Current: %u" % (ang_des, ai.selfHeadingDeg()))
+            # print("Turning to %u. Current: %u" % (ang_des, ai.selfHeadingDeg()))
             ai.turnToDeg(ang_des)
             thrust_level = np.cos(angle_diff(orientation, acc_ang)) * acc_mod
             ai.thrust(thrust_level > self.t_th)
 
-            print("Pos: %s. Target: %s" % (pos, self.position))
-            print("Current angle: %f, ang_des: %f." % (orientation, ang_des))
+            # print("Pos: %s. Target: %s" % (pos, self.position))
+            # print("Current angle: %f, ang_des: %f." % (orientation, ang_des))
 
             #print("Cos: ", np.cos(angle_diff(orientation, acc_ang)))
 
