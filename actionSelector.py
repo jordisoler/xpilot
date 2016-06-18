@@ -12,11 +12,11 @@ class ActionSelector(object):
     """ Selects the proper action to be taken. """
     def __init__(self, user=True):
         self.user = user
-        self.actions = {
-                "1" : "go_center",
-                "2" : "avoid_wall",
-                "3" : "fire"
-                }
+        # self.actions = {
+                # "1" : "go_center",
+                # "2" : "avoid_wall",
+                # "3" : "fire"
+                # }
 
     def action_pressed(self):
         """
@@ -31,7 +31,7 @@ class ActionSelector(object):
             if s == sys.stdin:
                 key = sys.stdin.readline()[-2]
         try:
-            action = self.actions[key]
+            action = int(key)#self.actions[key]
         except:
             action = None
         return action

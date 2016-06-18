@@ -47,8 +47,9 @@ def ai_loop():
             initialise()
 
         action = actSelector.decide()
-        if action is not None and action != ship.current_action():
+        if action is not None:
             ship.set_action(action)
+
         ship.act()
     except:
         print("Unexpected error, %s: %s" % sys.exc_info()[:2])
