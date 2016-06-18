@@ -10,7 +10,7 @@ import traceback
 import libpyAI as ai
 import numpy as np
 from action import Action
-from constants import *
+from constants import WALL_MARGIN, MAP_WIDTH, MAP_HEIGHT
 from xpilot_tools import angle_diff
 from xpilot_tools import cart2pol
 

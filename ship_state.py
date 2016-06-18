@@ -4,10 +4,7 @@
     This is part of the XPilot bot for the final project in
     Scientific Python for Engineers.
 """
-# from moveAt import MoveAt, GoCenter, AvoidWall
-# from action import DoNothing
-# from fire import Fire
-from action_set import ACTIONS
+from constants import ACTIONS
 
 
 class ShipState(object):

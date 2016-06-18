@@ -10,7 +10,7 @@ import numpy as np
 import libpyAI as ai
 from action import Action
 from xpilot_tools import angle_to
-from constants import *
+from constants import FIRE_GAIN
 
 class Fire(Action):
     """

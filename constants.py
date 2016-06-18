@@ -1,3 +1,9 @@
+"""
+    Used constants.
+
+    This is part of the XPilot bot for the final project in
+    Scientific Python for Engineers.
+"""
 
 TARGET = (1000, 1000)
 DATA_FILE = "last_game.csv" # File name to store game data
@@ -25,3 +31,9 @@ ORIENTATION_TH = 2.0        # Orientation threshold in degrees
 MAX_TURN_SPEED = "64"
 TURN_SPEED = MAX_TURN_SPEED
 
+# Set of selectable actions
+import action
+import fire
+import moveAt
+ACTIONS = [action.DoNothing, moveAt.GoCenter, \
+        moveAt.AvoidWall, fire.FireEnemy, fire.FireClosestEnemy]
