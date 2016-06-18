@@ -4,6 +4,7 @@
     This is part of the XPilot bot for the final project in
     Scientific Python for Engineers.
 """
+import libpyAI as ai
 from constants import ACTIONS
 
 
@@ -16,6 +17,7 @@ class ShipState(object):
         self.action = None
         self.target = None
         self.warned = False
+        self.was_dead = ai.selfAlive()
 
     def set_action(self, act, target=None):
         """ Sets the current action """
@@ -32,6 +34,10 @@ class ShipState(object):
 
     def act(self):
         """ Act according to the current action """
+        if self.was_dead:
+            for _ in range(3): ai.shield()
+            self.was_dead = False
+
         try:
             self.action.act()
         except AttributeError:
@@ -58,5 +64,12 @@ class ShipState(object):
             if self.action is not None:
                 self.action.preempt()
             self.action = action_types[0]()
+
+
+    def you_are_dead(self):
+        """ Procedure to be run when the ship is dead. """
+        if not self.was_dead:
+            self.set_action("DoNothing")
+            self.was_dead = True
 
 

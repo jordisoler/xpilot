@@ -36,6 +36,7 @@ def initialise():
     """ Initial procedure """
     print("New Game!")
     ship.set_action("do_nothing")
+    for _ in range(3): ai.shield() # Avoid initial shield locking
 
 
 def ai_loop():
@@ -46,11 +47,14 @@ def ai_loop():
         if first_time:
             initialise()
 
-        action = actSelector.decide()
-        if action is not None:
-            ship.set_action(action)
+        if ai.selfAlive():
+            action = actSelector.decide()
+            if action is not None:
+                ship.set_action(action)
 
-        ship.act()
+            ship.act()
+        else:
+            ship.you_are_dead()
     except:
         print("Unexpected error, %s: %s" % sys.exc_info()[:2])
         print(traceback.print_tb(sys.exc_info()[-1]))
