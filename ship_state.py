@@ -59,7 +59,7 @@ class ShipState(object):
         action_types = [atype for atype in ACTIONS if atype.__name__ == name]
 
         if len(action_types) > 1:
-            print("There is more than one action with name '%"+name+"'.")
+            print("There is more than one action with name '"+name+"'.")
         elif len(action_types) == 0:
             print("Name '"+name+"' does not name a valid action.")
             print("Valid names are: ", ", ".join(act.__name__ for act in ACTIONS))
