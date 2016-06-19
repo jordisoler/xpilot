@@ -62,6 +62,9 @@ class FireEnemy(Fire):
             print("FireEnemy: No enemy selected! Exiting now.")
             ai.quitAI()
             sys.exit(1)
+        print("Open fire to:", ai.enemyNameId(idE))
+        if ai.selfShield():
+            ai.shield()
         self.idE = idE
         self.K = gain
 
