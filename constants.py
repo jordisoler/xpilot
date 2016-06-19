@@ -28,6 +28,8 @@ OFF = 0                     # Thrust off
 
 ORIENTATION_TH = 2.0        # Orientation threshold in degrees
 
+DISTANCE_TO_ENEMY = 25
+
 MAX_TURN_SPEED = "64"
 TURN_SPEED = MAX_TURN_SPEED
 
@@ -35,5 +37,5 @@ TURN_SPEED = MAX_TURN_SPEED
 import action
 import fire
 import moveAt
-ACTIONS = [action.DoNothing, moveAt.GoCenter, \
-        moveAt.AvoidWall, fire.FireEnemy, fire.FireClosestEnemy]
+ACTIONS = [action.DoNothing, moveAt.GoCenter, moveAt.AvoidWall, \
+        moveAt.SurroundClosestEnemy, fire.FireClosestEnemy]

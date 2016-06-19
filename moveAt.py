@@ -7,10 +7,11 @@
 
 import sys
 import traceback
+from random import uniform
 import libpyAI as ai
 import numpy as np
 from action import Action
-from constants import WALL_MARGIN, MAP_WIDTH, MAP_HEIGHT
+from constants import WALL_MARGIN, MAP_WIDTH, MAP_HEIGHT, DISTANCE_TO_ENEMY
 from xpilot_tools import angle_diff
 from xpilot_tools import cart2pol
 
@@ -88,7 +89,6 @@ class MoveAt(Action):
 class GoCenter(MoveAt):
     """ Go to the center of the map """
     def __init__(self):
-        self.name = "go_center"
         middle = (MAP_WIDTH/2, MAP_HEIGHT/2)
         super().__init__(position=middle)
 
@@ -98,9 +98,8 @@ class AvoidWall(MoveAt):
         Ship action that consists in moving the ship away from the walls.
     """
     def __init__(self):
-        self.name = "avoid_walls"
-        self.position = [MAP_HEIGHT, MAP_WIDTH]
-        self.setGains()
+        pos = [MAP_HEIGHT, MAP_WIDTH]
+        super().__init__(position=pos)
 
 
     def act(self):
@@ -112,3 +111,32 @@ class AvoidWall(MoveAt):
         self.done = pos == goal
         if pos != goal:
             self.control(goal)
+
+
+class SurroundEnemy(MoveAt):
+    """
+        Moves the ship to a random position at a certain distance of an enemy
+    """
+    def __init__(self, idE):
+        self.idE = idE
+        angle = uniform(0, np.pi)
+        offset = DISTANCE_TO_ENEMY * np.array([np.cos(angle), np.sin(angle)])
+        self.pos_offset = [np.round(coord) for coord in offset]
+        enemy_pos = np.array([ai.screenEnemyXId(idE), ai.screenEnemyYId(idE)])
+        pos = enemy_pos + self.pos_offset
+        super().__init__(position=[np.round(coord) for coord in pos])
+
+
+    def act(self):
+        enemy_pos = np.array([ai.screenEnemyXId(self.idE), ai.screenEnemyYId(self.idE)])
+        self.position = enemy_pos + self.pos_offset 
+        self.control()
+
+
+class SurroundClosestEnemy(SurroundEnemy):
+    """
+        SurroundEnemy applied to the closest one
+    """
+    def __init__(self):
+        idE = ai.closestShipId()
+        super().__init__(idE)

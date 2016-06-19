@@ -18,6 +18,7 @@ class ShipState(object):
         self.target = None
         self.warned = False
         self.was_dead = ai.selfAlive()
+        self.was_dead_before = ai.selfAlive()
 
     def set_action(self, act, target=None):
         """ Sets the current action """
@@ -35,8 +36,11 @@ class ShipState(object):
     def act(self):
         """ Act according to the current action """
         if self.was_dead:
-            for _ in range(3): ai.shield()
+            for _ in range(2): ai.shield()
             self.was_dead = False
+        elif self.was_dead_before:
+            if not ai.selfShield(): ai.shield()
+            self.was_dead_before = False
 
         try:
             self.action.act()
@@ -71,5 +75,6 @@ class ShipState(object):
         if not self.was_dead:
             self.set_action("DoNothing")
             self.was_dead = True
+            self.was_dead_before = True
 
 
