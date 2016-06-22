@@ -9,7 +9,7 @@ import sys
 import numpy as np
 import libpyAI as ai
 from action import Action
-from xpilot_tools import angle_to
+from xpilot_tools import angle_to, id_valid
 from constants import FIRE_GAIN
 
 class Fire(Action):
@@ -75,6 +75,13 @@ class FireEnemy(Fire):
         vel = ai.enemySpeedId(self.idE) * np.array([np.cos(angle), np.sin(angle)])
         self.target = pos - vel * self.K
         self.open_fire()
+
+        # Put up shield if no good enemy. XOR operation:
+        if id_valid(self.idE) == ai.selfShield():
+            ai.shield()
+
+    def is_done(self):
+        return not id_valid(self.idE)
 
 
 class FireClosestEnemy(FireEnemy):

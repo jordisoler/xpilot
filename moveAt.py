@@ -129,8 +129,12 @@ class SurroundEnemy(MoveAt):
 
     def act(self):
         enemy_pos = np.array([ai.screenEnemyXId(self.idE), ai.screenEnemyYId(self.idE)])
-        self.position = enemy_pos + self.pos_offset 
-        self.control()
+        if ai.screenEnemyXId(self.idE) != -1:
+            self.position = enemy_pos + self.pos_offset
+            self.control()
+
+    def is_done(self):
+        return ai.screenEnemyXId(self.idE) == -1
 
 
 class SurroundClosestEnemy(SurroundEnemy):

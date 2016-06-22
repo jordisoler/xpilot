@@ -46,3 +46,7 @@ def angle_to(goal, origin=None):
 
     return t_ang * 180. / 3.1415
 
+def id_valid(idE):
+    """ Return wether idE is a valid enemy id. """
+    return ai.screenEnemyXId(idE) != -1
+

@@ -49,6 +49,12 @@ class ShipState(object):
                 print("Action not yet initialised!")
                 self.warned = True
 
+    def is_done(self):
+        """ True if the action is done """
+        if self.action is None:
+            return True
+        return self.action.is_done()
+
     def current_action(self):
         """ Returns the ship current action """
         return "None" if self.action is None else self.action.__class__.__name__
