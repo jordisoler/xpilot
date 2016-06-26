@@ -7,6 +7,8 @@
 
 import sys
 import select
+from constants import CLF_THR
+from classifier import classifier
 
 def action_pressed():
     """
@@ -34,6 +36,9 @@ class ActionSelector(object):
     """ Selects the proper action to be taken. """
     def __init__(self, user=True):
         self.user = user
+        if not user:
+            self.clf = classifier()
+            self.clf.train()
 
 
     def decide(self):
@@ -41,5 +46,7 @@ class ActionSelector(object):
         if self.user:
             return action_pressed()
         else:
-            raise NotImplementedError("ActionSelector: Only user mode suported")
+            act, score = self.clf.classify_state()
+            print("Action: %s, score: %f" % (act, score))
+            return act if score > CLF_THR else None
 

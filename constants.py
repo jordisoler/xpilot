@@ -28,6 +28,9 @@ OFF = 0                     # Thrust off
 
 ORIENTATION_TH = 2.0        # Orientation threshold in degrees
 
+CLF_THR = 0.3               # Classification Threshold. Minimum score of
+                            #       an action to change the current action
+
 DISTANCE_TO_ENEMY = 25
 
 MAX_TURN_SPEED = "64"
