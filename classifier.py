@@ -92,11 +92,14 @@ class classifier(object):
             raise NameError("""Attempt to extract features when classifier
                     is not trained""")
         features = []
-        for value, idx in zip(readings, range(len(readings))):
-            if idx == self.headers.index('EnemyShield'):
-                features.append(1.0 if value == 1 else 0.0)
+        # Add features in the same order as in training
+        for feature in self.headers:
+            if feature == 'Action':
+                continue
+            elif feature == 'EnemyShield':
+                features.append(1.0 if readings[feature] == 1 else 0)
             else:
-                features.append(value)
+                features.append(readings[feature])
         features = np.array(features)
         features = np.min((features, self.maxs), axis=0)
         return self.scaler.transform(features)
@@ -117,6 +120,6 @@ class classifier(object):
         if not self.trained:
             return 'DoNothing', 1.0
         state = get_readings()
-        X = self.extract_features(state.values())
+        X = self.extract_features(state)
         return str(self.clf.predict(X.reshape(1, -1))[0]), np.max(self.clf.predict_proba(X.reshape(1, -1)))
 
