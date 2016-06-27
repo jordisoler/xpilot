@@ -76,10 +76,11 @@ class classifier(object):
                     line.append(value)
             X.append(line)
         X2 = np.array(X, dtype=np.float)
-        X2[X2==X2.max(axis=0)] = -1
+        mask = (X2 == X2.max(axis=0)) & (X2 != 1.)
+        X2[mask] = -1
         self.maxs = X2.max(axis=0)
         for i, max_el in zip(range(len(self.maxs)), self.maxs):
-            X2[X2[:,i]==-1] = max_el
+            X2[X2[:, i] == -1] = max_el
 
         if not self.trained:
             self.scaler.fit(X2)
@@ -99,8 +100,6 @@ class classifier(object):
         features = np.array(features)
         features = np.min((features, self.maxs), axis=0)
         return self.scaler.transform(features)
-
-
 
 
     def train(self, file_name='history.csv'):
