@@ -2,4 +2,5 @@ libpyAI.so
 *.csv
 *.csv#
 *.ods
+*.bak
 __pycache__/*
