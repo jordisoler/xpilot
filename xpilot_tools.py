@@ -1,4 +1,9 @@
-""" File containing tools for the Xpilot autopilot """
+""" 
+    File containing tools for the Xpilot autopilot
+
+    This is part of the XPilot bot for the final project in
+    Scientific Python for Engineers.
+"""
 import math
 import numpy as np
 import libpyAI as ai

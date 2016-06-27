@@ -44,8 +44,10 @@ class ActionSelector(object):
     def decide(self):
         """ Decide which action to take. """
         if self.user:
+            # User mode. Chooses action according to key (0, 1, 2, 3 or 4) pressed
             return action_pressed()
         else:
+            # Bot mode. Chooses action by classifying current state
             act, score = self.clf.classify_state()
             print("Action: %s, score: %f" % (act, score))
             return act if score > CLF_THR else None

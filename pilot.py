@@ -1,5 +1,10 @@
-#Xpilot-AI Team 2012
-#Run: python3 Spinner.py
+"""
+    This is the main file to be run:
+    > python3 pilot.py
+
+    This is part of the XPilot bot for the final project in
+    Scientific Python for Engineers.
+"""
 import libpyAI as ai
 import traceback
 import numpy as np
@@ -43,7 +48,6 @@ def initialise():
 
 def ai_loop():
     """ Main loop. Automatically run at each frame. """
-
     try:
         first_time = register()
         if first_time:
@@ -62,9 +66,11 @@ def ai_loop():
         print(traceback.print_tb(sys.exc_info()[-1]))
 
 
+# Empty data file
 open(DATA_FILE, "w").close()
+# Declare the ShipState object of the game
 ship = ShipState()
+# Initialise ActionSelector in 'bot' (no user) mode
 actSelector = ActionSelector(user=False)
-# actSelector = ActionSelector()
 
 ai.start(ai_loop, ["-name", PLAYER_NAME, "-join", HOST, "-turnSpeed", TURN_SPEED])

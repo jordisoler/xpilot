@@ -1,5 +1,5 @@
 """
-    This file hosts the class Fire.
+    This file hosts the class Fire and its derived classes.
 
     This is part of the XPilot bot for the final project in
     Scientific Python for Engineers.

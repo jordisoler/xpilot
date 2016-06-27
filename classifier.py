@@ -12,6 +12,7 @@ from sklearn import svm, preprocessing
 import libpyAI as ai
 
 def get_readings():
+    """ Returns the  main  sensor readings """
     cl_enemy = ai.closestShipId()
     data = {}
     data["X"] = ai.selfX()
@@ -38,6 +39,7 @@ def get_readings():
     return data
 
 def readData(f_name):
+    """ Read history data from a csv file """
     data = []
     with open(f_name, 'r') as csvfile:
         reader = csv.reader(csvfile, delimiter=';')
@@ -52,6 +54,7 @@ def readData(f_name):
 
 
 class classifier(object):
+    """ Class used for classification of the current state """
     def __init__(self):
         self.scaler = preprocessing.StandardScaler()
         self.trained = False
@@ -59,8 +62,7 @@ class classifier(object):
         self.headers = None
 
     def process(self, data):
-        # action = {'DoNothing' : 0, 'AvoidWall' : 1, 'GoCenter' : 2,
-                # 'SurroundClosestEnemy' : 3, 'FireClosestEnemy' : 4}
+        """ Extract labeled features from a matrix """
         idx_y = self.headers.index('Action')
         idx_shield = self.headers.index('EnemyShield')
         y = []
@@ -69,14 +71,22 @@ class classifier(object):
             line = []
             for value, i in zip(row, range(len(row))):
                 if i == idx_y:
+                    # Action column
                     y.append(value)
                 elif i == idx_shield:
+                    # Categorical variable
                     line.append(1.0 if value == 1 else 0.0)
                 else:
                     line.append(value)
             X.append(line)
         X2 = np.array(X, dtype=np.float)
+
+        # Select maximums per row which are not 1
         mask = (X2 == X2.max(axis=0)) & (X2 != 1.)
+
+        # Convert all maximums and -1 (flag) values to the second maximum
+        # We need it to properly represent our readings in a linear way
+        # It happens that some maximums are just out of the scale of the rest of values
         X2[mask] = -1
         self.maxs = X2.max(axis=0)
         for i, max_el in zip(range(len(self.maxs)), self.maxs):
@@ -88,9 +98,11 @@ class classifier(object):
 
 
     def extract_features(self, readings):
+        """ Feature extraction of a given ship state """
         if not self.trained:
             raise NameError("""Attempt to extract features when classifier
                     is not trained""")
+
         features = []
         # Add features in the same order as in training
         for feature in self.headers:
@@ -106,6 +118,7 @@ class classifier(object):
 
 
     def train(self, file_name='history.csv'):
+        """ Train the classifier """
         fields, info = readData(file_name)
         self.headers = fields
         X, y = self.process(info)
@@ -116,7 +129,7 @@ class classifier(object):
 
 
     def classify_state(self):
-        """ Classifies the current ship state to guive a proper action."""
+        """ Classifies the current ship state to give a proper action."""
         if not self.trained:
             return 'DoNothing', 1.0
         state = get_readings()
